@@ -6,8 +6,6 @@ class App extends React.Component {
         super(props);
     }
 
-    
-
     render(){
         console.log('updated stuff');
         return(
