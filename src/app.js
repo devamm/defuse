@@ -9,7 +9,7 @@ class App extends React.Component {
     
 
     render(){
-        console.log('hello there!');
+        console.log('updated stuff');
         return(
             <div className="game">
                 <h1>Hello There</h1>

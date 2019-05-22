@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   entry: [
     '@babel/polyfill',
-    './index.js'
+    './src/index.js'
   ],
   module: {
     rules: [
@@ -22,7 +22,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   output: {
-    path: path.resolve(__dirname),
+    path: path.resolve(__dirname, 'src'),
     filename: 'bundle.js'
   }
 };
