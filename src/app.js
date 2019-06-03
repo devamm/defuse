@@ -26,9 +26,11 @@ class App extends React.Component {
     }
 
     render(){
-        
+        let array = Array(8).fill('0').map(() => Array(8).fill('0'));
+        array = generateMines(array);
+        array = generateNeighbors(array);
         if(this.state.loaded == true){
-            let array = this.state.board;  
+            //let array = this.state.board;  
             return(
                 <center className="game">
                     <h1>Hello There</h1>
@@ -45,15 +47,5 @@ class App extends React.Component {
         }
     }
 }
-
-
-
-/*
-
-(x-1, y-1)  (x-1, y) (x-1, y+1)
-(x, y-1)    (x, y)   (x, y+1)
-(x+1, y-1)  (x+1, y) (x+1, y+1)
-*/
-
 
 export default App;
