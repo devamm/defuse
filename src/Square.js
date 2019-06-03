@@ -6,7 +6,6 @@ class Square extends React.Component {
     }    
 
     render(){
-        console.log('hi')
         return(
             <div className="square">
                 <p>{this.props.elem}</p>

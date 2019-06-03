@@ -1,12 +1,14 @@
 import React from 'react'
 import Square from './Square.js'
+const {generateMines, generateNeighbors} = require('./gameLogic')
 
 class App extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {
-            board : Array(8).fill('0').map(() => Array(8).fill('0'))
+            board : Array(8).fill('0').map(() => Array(8).fill('0')),
+            loaded: false
         }
     }
 
@@ -14,36 +16,44 @@ class App extends React.Component {
         //generate empty board
         let array = this.state.board
         //generate mine (10)
-        let count = 0
-        
-        while(count < 10){
-            //generate random coordinates
-            let x = Math.floor(Math.random() * 8);
-            let y = Math.floor(Math.random() * 8);
-            //if coordinate is empty, place mine
-            if(array[x][y] == '0'){
-                array[x][y] = 'x';
-                count++;
-            }  
-        }
-        console.log('generated mines')
-        //console.log(array);
-        this.setState({board: array})
+        array = generateMines(array);
+        console.log('generated mines');
+
+        //add neighbor numbers for all squares neighboring a mine
+        array = generateNeighbors(array);
+        console.log(array);
+        this.setState({board: array, loaded: true})
     }
 
     render(){
-        let array = this.state.board;  
-        console.log(array);
-        return(
-            <center className="game">
-                <h1>Hello There</h1>
-               
-                <div className="container">
-                 {array.map((row, i) => row.map( (col, x) => {return(<Square elem={col} /> )}))}
-                </div>
-            </center>
-        )
+        
+        if(this.state.loaded == true){
+            let array = this.state.board;  
+            return(
+                <center className="game">
+                    <h1>Hello There</h1>
+                   
+                    <div className="container">
+                     {array.map((row, i) => row.map( (col, x) => {return(<Square elem={col} /> )}))}
+                    </div>
+                </center>
+            )
+        } else {
+            return (
+                <h1>Loading</h1>
+            )
+        }
     }
 }
+
+
+
+/*
+
+(x-1, y-1)  (x-1, y) (x-1, y+1)
+(x, y-1)    (x, y)   (x, y+1)
+(x+1, y-1)  (x+1, y) (x+1, y+1)
+*/
+
 
 export default App;
