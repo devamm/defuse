@@ -10,18 +10,27 @@ img {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;    
-    height: 32em;
-    width: 32em;
+    height: 36em;
+    width: 36em;
    
 }
 
 .square {
-    height: 3em;
-    width: 3em;
-    margin: 0.5em;
-    background-color: #cecece;
+    height: 4em;
+    width: 4em;
+    margin: 0.25em;
+    background-color: #babdb6; 
+  
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.open{
+    /*background-color: #dededc; */
+    background-color: #eceaea;
+    
+    
+}
+
