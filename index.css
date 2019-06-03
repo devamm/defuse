@@ -1,9 +1,11 @@
-.game {
-   
-   
+body {
+    font-family: 'Quicksand', sans-serif;
 }
 
-
+img {
+    height: 60%;
+    width: 60%;
+}
 .container {
     display: flex;
     flex-direction: row;

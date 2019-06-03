@@ -19,6 +19,8 @@ class App extends React.Component {
     handleClick(e, coord){
         if(this.state.firstClick == true){
             this.firstClick(e, coord);
+        } else {
+            console.log('clicked!', coord);
         }
     }
 

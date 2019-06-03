@@ -6,11 +6,15 @@ class Square extends React.Component {
     }    
     
     render(){
-        const {elem, x,y, handleClick} = this.props;
+        let {elem, x,y, handleClick} = this.props;
         const coord = {x,y};
+        if(elem == 0){
+            elem = ""
+        }
         return(
             <div className="square" onClick={ (e) => handleClick(e, coord) }>
-                <p>{elem}</p>
+                {elem == 'x' ? (<img src="bomb.png" />) : (<h2>{elem}</h2>)}
+                
             </div>
             
         )
