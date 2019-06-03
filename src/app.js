@@ -27,6 +27,7 @@ class App extends React.Component {
     firstClick(e, coord){
         const {x,y} = coord;
         let array = this.state.board;
+        console.log('initial click on ',x,y);
         array = generateMines(array, x, y);
         array = generateNeighbors(array);
 

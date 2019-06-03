@@ -1,9 +1,14 @@
-const generateMines = (array) => {
+const generateMines = (array, initX, initY) => {
     let count = 0
     while(count < 10){
         //generate random coordinates
         let x = Math.floor(Math.random() * 8);
         let y = Math.floor(Math.random() * 8);
+        //if coords generated = coords of initial skip, generate new number
+        if(x == initX && y == initY){
+            console.log('generating on initial, skipping')
+            continue;
+        }
         //if coordinate is empty, place mine
         if(array[x][y] == '0'){
             array[x][y] = 'x';
