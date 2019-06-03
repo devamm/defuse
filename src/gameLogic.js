@@ -1,6 +1,5 @@
 const generateMines = (array) => {
     let count = 0
-        
     while(count < 10){
         //generate random coordinates
         let x = Math.floor(Math.random() * 8);
@@ -42,11 +41,11 @@ const generateNeighbors = (array) => {
                 }
                 array[x][y] = adjacentMines;
             } else {
-                console.log('mine, skipping');
+                //console.log('mine, skipping');
             }
         }
     }
-    console.log('generated neighbors');
+    //console.log('generated neighbors');
     return array;
 }
 

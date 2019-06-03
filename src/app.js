@@ -8,43 +8,47 @@ class App extends React.Component {
 
         this.state = {
             board : Array(8).fill('0').map(() => Array(8).fill('0')),
-            loaded: false
+            loaded: false,
+            firstClick: true,
+        }
+
+        this.handleClick = this.handleClick.bind(this);
+        this.firstClick = this.firstClick.bind(this);
+    }
+
+    handleClick(e, coord){
+        if(this.state.firstClick == true){
+            this.firstClick(e, coord);
         }
     }
 
-    componentDidMount(){
-        //generate empty board
-        let array = this.state.board
-        //generate mine (10)
-        array = generateMines(array);
-        console.log('generated mines');
-
-        //add neighbor numbers for all squares neighboring a mine
+    firstClick(e, coord){
+        const {x,y} = coord;
+        let array = this.state.board;
+        array = generateMines(array, x, y);
         array = generateNeighbors(array);
-        console.log(array);
-        this.setState({board: array, loaded: true})
+
+        this.setState({board: array, loaded: true, firstClick: false});
     }
+
 
     render(){
-        let array = Array(8).fill('0').map(() => Array(8).fill('0'));
-        array = generateMines(array);
-        array = generateNeighbors(array);
-        if(this.state.loaded == true){
-            //let array = this.state.board;  
-            return(
-                <center className="game">
-                    <h1>Hello There</h1>
-                   
-                    <div className="container">
-                     {array.map((row, i) => row.map( (col, x) => {return(<Square elem={col} /> )}))}
-                    </div>
-                </center>
-            )
-        } else {
-            return (
-                <h1>Loading</h1>
-            )
-        }
+        //let array = Array(8).fill('0').map(() => Array(8).fill('0'));
+        //array = generateMines(array);
+        //array = generateNeighbors(array);
+        const array = this.state.board;
+        return(
+            <center className="game">
+                <h1>Hello There</h1>
+               
+                <div className="container">
+                    {array.map((row, x) => row.map( (col, y) => {
+                        return(<Square elem={col} x={x} y={y} key={`${x}${y}`} handleClick={this.handleClick} /> )
+                        }))
+                    }
+                </div>
+            </center>
+        )
     }
 }
 
