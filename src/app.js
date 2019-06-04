@@ -9,7 +9,8 @@ class App extends React.Component {
         this.state = {
             board: buildBoard(),
             loaded: false,
-            firstClick: true
+            firstClick: true,
+            flags: 10,
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -22,7 +23,7 @@ class App extends React.Component {
         if(this.state.firstClick == true){
             this.firstClick(e, coord);
         } 
-      ;
+    
         const {x,y} = coord;
         let arr = this.state.board;
         arr[x][y].status = "open";
@@ -33,15 +34,26 @@ class App extends React.Component {
     placeFlag(e, coord){
         e.preventDefault();
         let arr = this.state.board;
+        let flags = this.state.flags;
         
         const {x,y} = coord;
         if(arr[x][y].status == 'open' || this.state.firstClick == true){
             //prevent placing flag on open square or before mines have been generated
             return;
         }
-        console.log('toggle flag on ',x,y);
+        //console.log('toggle flag on ',x,y);
+        const prev = arr[x][y].flag;
+       
+        if(prev == false){
+            if(flags <= 0){
+                return;
+            }
+            flags--;
+        } else {
+            flags++;
+        }
         arr[x][y].flag = !arr[x][y].flag;
-        this.setState({board: arr});
+        this.setState({board: arr, flags});
     }
 
     firstClick(e, coord){
@@ -60,9 +72,13 @@ class App extends React.Component {
     render(){
         
         const array = this.state.board;
+       
         return(
             <center className="game">
-                <h1>Hello There</h1>
+                <div className="game-header">
+                    <img src="img/flag.png" height="35em"  />
+                    <h1 >{`${this.state.flags}/10`}</h1>
+                </div>
                
                 <div className="container">
                     {array.map((row, x) => row.map( (col, y) => {

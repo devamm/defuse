@@ -2,7 +2,7 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
-img {
+.mine {
     height: 60%;
     width: 60%;
 }
@@ -13,6 +13,13 @@ img {
     height: 36em;
     width: 36em;
    
+}
+
+.game-header {
+    width: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .square {
