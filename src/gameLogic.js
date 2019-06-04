@@ -4,14 +4,14 @@ const generateMines = (array, initX, initY) => {
         //generate random coordinates
         let x = Math.floor(Math.random() * 8);
         let y = Math.floor(Math.random() * 8);
-        //if coords generated = coords of initial skip, generate new number
+      
         if(x == initX && y == initY){
-            console.log('generating on initial, skipping')
+              //coords generated = coords of initial skip, generate new number
             continue;
         }
         //if coordinate is empty, place mine
-        if(array[x][y] == '0'){
-            array[x][y] = 'x';
+        if(array[x][y].val == '0'){
+            array[x][y].val = 'x';
             count++;
         }  
     }
@@ -24,7 +24,7 @@ const generateNeighbors = (array) => {
         for(let y = 0; y < array[x].length; y++){
             //for elem at [x][y]
             // if mine, skip step
-            if(array[x][y] != 'x'){
+            if(array[x][y].val != 'x'){
                 let adjacentMines= 0;
                 for(let i = -1; i <=1; i++){
                     for(let j = -1; j <=1; j++){
@@ -35,7 +35,7 @@ const generateNeighbors = (array) => {
                                 continue;
                             }
                             //if exists, check if mine   
-                            if(array[x+i][y+j] == 'x'){
+                            if(array[x+i][y+j].val == 'x'){
                                 //if mine, increment adjacentMine
                                 adjacentMines++;
                             }
@@ -44,7 +44,7 @@ const generateNeighbors = (array) => {
                         }
                     }
                 }
-                array[x][y] = adjacentMines;
+                array[x][y].val = adjacentMines;
             } else {
                 //console.log('mine, skipping');
             }
@@ -54,4 +54,15 @@ const generateNeighbors = (array) => {
     return array;
 }
 
-export {generateMines, generateNeighbors}
+const buildBoard = () => {
+    let board = [];
+    for(let i = 0; i < 8; i++){
+        board[i] = [];
+        for(let x = 0; x < 8; x++){
+            board[i][x] = {val: 0, status: 'init', flag: false}
+        }
+    }
+    return board;
+}
+
+export {generateMines, generateNeighbors, buildBoard}

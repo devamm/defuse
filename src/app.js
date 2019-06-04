@@ -1,44 +1,59 @@
 import React from 'react'
 import Square from './Square.js'
-const {generateMines, generateNeighbors} = require('./gameLogic')
+const {generateMines, generateNeighbors, buildBoard} = require('./gameLogic')
 
 class App extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {
-            board : Array(8).fill('0').map(() => Array(8).fill('0')),
+            board: buildBoard(),
             loaded: false,
-            firstClick: true,
+            firstClick: true
         }
 
         this.handleClick = this.handleClick.bind(this);
         this.firstClick = this.firstClick.bind(this);
-    }
+        this.placeFlag = this.placeFlag.bind(this);
 
+    }
+    
     handleClick(e, coord){
         if(this.state.firstClick == true){
             this.firstClick(e, coord);
-        } else {
-            console.log('clicked!', coord);
-        }
+        } 
+      ;
+        const {x,y} = coord;
+        let arr = this.state.board;
+        arr[x][y].status = "open";
+        this.setState({board: arr});
+        //console.log(coord);
+    }
+
+    placeFlag(e, coord){
+        let arr = this.state.board;
+        
+        const {x,y} = coord;
+        console.log('placed flag on ',x,y);
+        arr[x][y].flag = !arr[x][y].flag;
+        this.setState({board: arr});
     }
 
     firstClick(e, coord){
         const {x,y} = coord;
         let array = this.state.board;
-        console.log('initial click on ',x,y);
         array = generateMines(array, x, y);
         array = generateNeighbors(array);
 
         this.setState({board: array, loaded: true, firstClick: false});
     }
 
+    componentDidMount(){
+        console.log("hey, no cheating!");
+    }
 
     render(){
-        //let array = Array(8).fill('0').map(() => Array(8).fill('0'));
-        //array = generateMines(array);
-        //array = generateNeighbors(array);
+        
         const array = this.state.board;
         return(
             <center className="game">
@@ -46,10 +61,13 @@ class App extends React.Component {
                
                 <div className="container">
                     {array.map((row, x) => row.map( (col, y) => {
-                        return(<Square elem={col} x={x} y={y} key={`${x}${y}`} handleClick={this.handleClick} /> )
+                       
+                        return(<Square elem={col} x={x} y={y} key={`${x}${y}`}
+                        handleClick={this.handleClick} placeFlag={this.placeFlag}  /> )
                         }))
                     }
                 </div>
+               
             </center>
         )
     }
