@@ -31,10 +31,15 @@ class App extends React.Component {
     }
 
     placeFlag(e, coord){
+        e.preventDefault();
         let arr = this.state.board;
         
         const {x,y} = coord;
-        console.log('placed flag on ',x,y);
+        if(arr[x][y].status == 'open' || this.state.firstClick == true){
+            //prevent placing flag on open square or before mines have been generated
+            return;
+        }
+        console.log('toggle flag on ',x,y);
         arr[x][y].flag = !arr[x][y].flag;
         this.setState({board: arr});
     }

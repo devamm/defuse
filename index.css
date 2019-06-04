@@ -45,8 +45,10 @@ img {
 .flag {
     z-index: 3;
     background-color: #eceaea; 
-    background-image: url('flag.png');
-    background-size: contain;
+    background-image: url('img/flag.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .square-click{
