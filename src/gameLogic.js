@@ -65,4 +65,44 @@ const buildBoard = () => {
     return board;
 }
 
-export {generateMines, generateNeighbors, buildBoard}
+const openSquare = (array, x, y) =>{
+
+    //open square
+    array[x][y].status = 'open';
+   
+    //if square is a mine or number, return 
+    if(array[x][y].val != 0){
+        return array;
+    }
+
+    //get all neighbors for [x][y]
+    for(let i = -1; i <=1; i++){
+        for(let j = -1; j <=1; j++){
+            //check if neighbor exists
+            if(x+i in array && y+j in array[x+i]){
+                //open direct neighbor only if it is numeric (non empty and not a mine) && unopened
+                if(array[x+i][y+j].val > 0 && array[x+i][y+j].status == 'init'){
+                    array[x+i][y+j].status = 'open';
+                    continue;
+                }
+                //direct neighbor is empty, recurse if unopened
+                if(array[x+i][y+j].status != 'open'){
+                    array = openSquare(array, x+i, y+j);
+                }
+            } else {
+                continue;
+            }
+        }
+    }
+    
+    //return array containing new game state
+    //console.log('returning');
+    return array;
+}
+
+const getGameState = (array) => {
+    //returns -1 if game lost, 0 if in progress, and 1 if victory condition
+
+}
+
+export {generateMines, generateNeighbors, buildBoard, openSquare, getGameState}

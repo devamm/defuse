@@ -1,6 +1,6 @@
 import React from 'react'
 import Square from './Square.js'
-const {generateMines, generateNeighbors, buildBoard} = require('./gameLogic')
+const {generateMines, generateNeighbors, buildBoard, openSquare} = require('./gameLogic')
 
 class App extends React.Component {
     constructor(props){
@@ -27,6 +27,7 @@ class App extends React.Component {
         const {x,y} = coord;
         let arr = this.state.board;
         arr[x][y].status = "open";
+        arr = openSquare(arr, coord.x, coord.y);
         this.setState({board: arr});
         //console.log(coord);
     }
