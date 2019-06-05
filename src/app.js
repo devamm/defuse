@@ -77,11 +77,17 @@ class App extends React.Component {
         
         const array = this.state.board;
         if(this.state.status == 1){
-            console.log('You win!')
+            console.log('🎉🎉🎉')
+            if(confirm('You Win!')){
+                window.location.reload();  
+            }
         }
 
         if(this.state.status == -1){
-            console.log('You Lose!');
+            console.log('BOOM!');
+            if(confirm('You Lose!')){
+                window.location.reload();  
+            }
         }
        
         return(
