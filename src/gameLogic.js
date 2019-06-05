@@ -102,6 +102,31 @@ const openSquare = (array, x, y) =>{
 
 const getGameState = (array) => {
     //returns -1 if game lost, 0 if in progress, and 1 if victory condition
+    let openMines = 0;
+    let openSquares = 0;
+
+    for(let x = 0; x < array[0].length; x++){
+        for(let y = 0; y < array[x].length; y++){
+            //check if square is opened
+            if(array[x][y].status == 'open'){
+                openSquares++;
+                //check if square is a mine
+                if(array[x][y].val == 'x'){
+                    openMines++;
+                }
+            }
+
+        }
+    }
+
+    if(openMines != 0){
+        return -1;
+    }
+    if(openSquares == 54){
+        return 1;
+    }
+
+    return 0;
 
 }
 

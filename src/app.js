@@ -1,6 +1,7 @@
 import React from 'react'
 import Square from './Square.js'
-const {generateMines, generateNeighbors, buildBoard, openSquare} = require('./gameLogic')
+import { throws } from 'assert';
+const {generateMines, generateNeighbors, buildBoard, openSquare, getGameState} = require('./gameLogic')
 
 class App extends React.Component {
     constructor(props){
@@ -11,6 +12,7 @@ class App extends React.Component {
             loaded: false,
             firstClick: true,
             flags: 10,
+            status: 0,
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -26,9 +28,10 @@ class App extends React.Component {
     
         const {x,y} = coord;
         let arr = this.state.board;
-        arr[x][y].status = "open";
+        //arr[x][y].status = "open";
         arr = openSquare(arr, coord.x, coord.y);
-        this.setState({board: arr});
+        const status = getGameState(arr);
+        this.setState({board: arr, status});
         //console.log(coord);
     }
 
@@ -73,6 +76,13 @@ class App extends React.Component {
     render(){
         
         const array = this.state.board;
+        if(this.state.status == 1){
+            console.log('You win!')
+        }
+
+        if(this.state.status == -1){
+            console.log('You Lose!');
+        }
        
         return(
             <center className="game">
