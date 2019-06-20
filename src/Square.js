@@ -3,7 +3,7 @@ import React from 'react'
 const Square = (props) => {
    let {elem} = props;
    let state = props.status;
-   if(state == -1 && elem.val == "x"){
+   if(state == -1 && elem.val == "x" && elem.flag != true){
        elem.status = "open";
    }
 
