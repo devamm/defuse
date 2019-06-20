@@ -130,4 +130,26 @@ const getGameState = (array) => {
 
 }
 
-export {generateMines, generateNeighbors, buildBoard, openSquare, getGameState}
+const getTime = (ms) => {
+    let d, h, m, s;
+    s = Math.floor(ms / 1000);
+    m = Math.floor(s / 60);
+    s = s % 60;
+    h = Math.floor(m / 60);
+    m = m % 60;
+    d = Math.floor(h / 24);
+    h = h % 24;
+    h += d * 24;
+    if(h == 0){
+        h = "00";
+    }
+    if(m == 0){
+        m = "00";
+    }
+    if(s == 0){
+        s ="00";
+    }
+    return h + ':' + m + ':' + s;
+}
+
+export {generateMines, generateNeighbors, buildBoard, openSquare, getGameState, getTime}

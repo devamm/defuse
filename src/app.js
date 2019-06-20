@@ -1,26 +1,7 @@
 import React from 'react'
 import Square from './Square.js'
-const {generateMines, generateNeighbors, buildBoard, openSquare, getGameState} = require('./gameLogic')
+const {generateMines, generateNeighbors, buildBoard, openSquare, getGameState, getTime} = require('./gameLogic')
 
-const displayMsg = (status) => {
-    if(status == 1){
-        console.log('🎉🎉🎉')
-       window.setTimeout(() => {
-        if(confirm('You Win!')){
-            window.location.reload();  
-        }
-       }, 100);
-    }
-
-    if(status == -1){
-        console.log('BOOM!');
-        window.setTimeout(() => {
-            if(confirm('You Lose!')){
-                window.location.reload();  
-            }
-           }, 100);
-    }
-}
 
 class App extends React.Component {
     constructor(props){
@@ -32,11 +13,13 @@ class App extends React.Component {
             firstClick: true,
             flags: 10,
             status: 0,
+            startTime: 0
         }
 
         this.handleClick = this.handleClick.bind(this);
         this.firstClick = this.firstClick.bind(this);
         this.placeFlag = this.placeFlag.bind(this);
+        this.displayMsg = this.displayMsg.bind(this);
 
     }
     
@@ -48,13 +31,12 @@ class App extends React.Component {
             return;
         }
     
-        const {x,y} = coord;
+        
         let arr = this.state.board;
-        //arr[x][y].status = "open";
+     
         arr = openSquare(arr, coord.x, coord.y);
         const status = getGameState(arr);
         this.setState({board: arr, status});
-        //console.log(coord);
     }
 
     placeFlag(e, coord){
@@ -70,7 +52,7 @@ class App extends React.Component {
             //prevent placing flag on open square or before mines have been generated
             return;
         }
-        //console.log('toggle flag on ',x,y);
+        
         const prev = arr[x][y].flag;
        
         if(prev == false){
@@ -86,16 +68,39 @@ class App extends React.Component {
     }
 
     firstClick(e, coord){
+        const startTime = Date.now();
         const {x,y} = coord;
         let array = this.state.board;
         array = generateMines(array, x, y);
         array = generateNeighbors(array);
 
-        this.setState({board: array, loaded: true, firstClick: false});
+        this.setState({board: array, loaded: true, firstClick: false, startTime});
     }
 
     componentDidMount(){
         console.log("hey, no cheating!");
+    }
+
+    displayMsg(status){
+        if(status == 1){
+            console.log('🎉🎉🎉')
+            const endTime = Date.now();
+            const time = getTime(endTime - this.state.startTime);
+           window.setTimeout(() => {
+            if(confirm('You Win!\nCompleted in '+time)){
+                window.location.reload();  
+            }
+           }, 100);
+        }
+    
+        if(status == -1){
+            console.log('BOOM!');
+            window.setTimeout(() => {
+                if(confirm('You Lose!')){
+                    window.location.reload();  
+                }
+               }, 100);
+        }
     }
 
     render(){
@@ -118,7 +123,7 @@ class App extends React.Component {
                     }
                 </div>
                
-               {this.state.status != 0 ? displayMsg(this.state.status) : '' }
+               {this.state.status != 0 ? this.displayMsg(this.state.status) : '' }
             </center>
         )
     }
