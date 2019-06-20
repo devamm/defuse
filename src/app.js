@@ -101,8 +101,7 @@ class App extends React.Component {
     render(){
         
         const array = this.state.board;
-        const currStatus = getGameState(array);
-        console.log('rendering ' + currStatus);
+       
         return(
             <center className="game">
                 <div className="game-header">
@@ -114,7 +113,7 @@ class App extends React.Component {
                     {array.map((row, x) => row.map( (col, y) => {
                        
                         return(<Square elem={col} x={x} y={y} key={`${x}${y}`}
-                        handleClick={this.handleClick} placeFlag={this.placeFlag}  /> )
+                        handleClick={this.handleClick} placeFlag={this.placeFlag} status={this.state.status} /> )
                         }))
                     }
                 </div>
