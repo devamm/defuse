@@ -1,7 +1,26 @@
 import React from 'react'
 import Square from './Square.js'
-import { throws } from 'assert';
 const {generateMines, generateNeighbors, buildBoard, openSquare, getGameState} = require('./gameLogic')
+
+const displayMsg = (status) => {
+    if(status == 1){
+        console.log('🎉🎉🎉')
+       window.setTimeout(() => {
+        if(confirm('You Win!')){
+            window.location.reload();  
+        }
+       }, 100);
+    }
+
+    if(status == -1){
+        console.log('BOOM!');
+        window.setTimeout(() => {
+            if(confirm('You Lose!')){
+                window.location.reload();  
+            }
+           }, 100);
+    }
+}
 
 class App extends React.Component {
     constructor(props){
@@ -25,6 +44,9 @@ class App extends React.Component {
         if(this.state.firstClick == true){
             this.firstClick(e, coord);
         } 
+        if(this.state.status != 0){
+            return;
+        }
     
         const {x,y} = coord;
         let arr = this.state.board;
@@ -37,6 +59,9 @@ class App extends React.Component {
 
     placeFlag(e, coord){
         e.preventDefault();
+        if(this.state.status != 0){
+            return;
+        }
         let arr = this.state.board;
         let flags = this.state.flags;
         
@@ -76,20 +101,8 @@ class App extends React.Component {
     render(){
         
         const array = this.state.board;
-        if(this.state.status == 1){
-            console.log('🎉🎉🎉')
-            if(confirm('You Win!')){
-                window.location.reload();  
-            }
-        }
-
-        if(this.state.status == -1){
-            console.log('BOOM!');
-            if(confirm('You Lose!')){
-                window.location.reload();  
-            }
-        }
-       
+        const currStatus = getGameState(array);
+        console.log('rendering ' + currStatus);
         return(
             <center className="game">
                 <div className="game-header">
@@ -106,6 +119,7 @@ class App extends React.Component {
                     }
                 </div>
                
+               {this.state.status != 0 ? displayMsg(this.state.status) : '' }
             </center>
         )
     }
