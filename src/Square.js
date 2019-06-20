@@ -12,7 +12,9 @@ const Square = (props) => {
         onContextMenu={e => props.placeFlag(e, {x: props.x, y: props.y})}>
             <div className='square' >
                 {elem.status ==  'init'? (<div className={`${elem.flag == true ? 'flag': ''} closed`}/>) : ''}
-                {elem.val == 'x' ? (<img src="img/bomb.png" className="mine" />) : (<h1>{elem.val == 0? "" : elem.val}</h1>)}
+                {elem.status == 'open' ?
+                     (elem.val == 'x' ? (<img src="img/bomb.png" className="mine" />) : (<h1>{props.elem.val == 0? "" : props.elem.val}</h1>) )
+                     : ""}
             </div>
         </div>
     )
