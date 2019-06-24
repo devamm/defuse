@@ -140,14 +140,26 @@ const getTime = (ms) => {
     d = Math.floor(h / 24);
     h = h % 24;
     h += d * 24;
-    if(h == 0){
-        h = "00";
+    if(h < 10){
+        if(h == 0){
+            h = "00";
+        } else {
+            h = "0"+h;
+        }
     }
-    if(m == 0){
-        m = "00";
+    if(m <= 10){
+        if( m == 0){
+            m = "00";
+        } else {
+            m = "0"+m;
+        }
     }
-    if(s == 0){
-        s ="00";
+    if(s <= 10){
+        if(s == 0){
+            s = "00";
+        } else {
+            s = "0"+s;
+        }
     }
     return h + ':' + m + ':' + s;
 }
